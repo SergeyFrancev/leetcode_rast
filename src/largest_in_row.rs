@@ -37,16 +37,16 @@ impl Solution {
             let mut max_val = i32::MIN;
             while curr_lvl.len() > 0 {
                 let item: TreeNode = Rc::try_unwrap(curr_lvl.pop().unwrap()).unwrap().into_inner();
-								max_val = max(max_val, item.val);
-								if item.left.is_some() {
-									next_lvl.push(item.left.unwrap())
-								}
-								if item.right.is_some() {
-									next_lvl.push(item.right.unwrap())
-								}
+                max_val = max(max_val, item.val);
+                if item.left.is_some() {
+                    next_lvl.push(item.left.unwrap())
+                }
+                if item.right.is_some() {
+                    next_lvl.push(item.right.unwrap())
+                }
             }
 
-						out.push(max_val);
+            out.push(max_val);
         }
         // root.
         out

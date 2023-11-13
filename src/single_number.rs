@@ -14,13 +14,13 @@ impl Solution {
     pub fn reverse_words(s: String) -> String {
         let mut out: Vec<String> = Vec::from([]);
         let mut stack = String::from("");
-        for ch in s.chars().into_iter() {
+        for ch in s.as_bytes().into_iter() {
             match ch {
-                ' ' => {
+                b' ' => {
                     if stack.len() > 0 {
                         out.insert(0, stack.to_owned());
                     }
-                    stack = String::from("")
+                    stack.clear();
                 },
                 _ => {stack.push(ch)},
             }
