@@ -66,14 +66,107 @@ impl Solution {
 
         out
     }
+
+    pub fn sort_vowels3(s: String) -> String {
+        let mut vowes: String = String::with_capacity(s.len());
+        let v = String::from("uoieaUOIEA");
+
+        {
+            let mut stack: Vec<String> = vec![String::new(); 10];
+            for ch in s.chars() {
+                let pos = v.find(ch);
+                match pos {
+                    Some(v) => stack[v].push(ch),
+                    None => {},
+                }
+            }
+            for list in stack.into_iter().as_mut_slice() {
+                vowes.push_str(list);
+            }
+        }
+
+        if vowes.len() < 2 {
+            return s;
+        }
+
+        let mut out: String = String::with_capacity(s.len());
+        for ch in s.chars().into_iter() {
+            match vowes.contains(ch) {
+                true => out.push(vowes.pop().unwrap()),
+                _ => out.push(ch)
+            }
+        }
+
+        out
+    }
+
+    pub fn sort_vowels4(s: String) -> String {
+        let vowes = String::from("uoieaUOIEA");
+
+        let mut store: String = String::with_capacity(s.len());
+        let mut consonsnts: Vec<(String, usize)> = Vec::new();
+        {
+            let mut cursor: (String, usize) = (String::new(), 0);
+            let mut stack: Vec<String> = vec![String::new(); 10];
+            for ch in s.chars().into_iter() {
+                let pos = vowes.find(ch);
+                match pos {
+                    Some(v) => {
+                        stack[v].push(ch);
+                        cursor.1 += 1;
+                    },
+                    None => {
+                        if cursor.1 > 0 {
+                            consonsnts.push(cursor);
+                            cursor = (String::new(), 0);
+                        }
+                        cursor.0.push(ch);
+                    },
+                }
+            }
+            if cursor.0.len() > 0 || cursor.1 > 0 {
+                consonsnts.push(cursor);
+            }
+            for list in stack.into_iter().as_mut_slice() {
+                store.push_str(list);
+            }
+        }
+
+        if store.len() < 2 {
+            return s;
+        }
+
+        let mut out: String = String::with_capacity(s.len());
+        while consonsnts.len() > 0 {
+            let curr = consonsnts.pop().unwrap();
+            out.push_str(&curr.0);
+            for i in 0..curr.1 {
+                out.push(store.pop().unwrap());
+            }
+        }
+        // for cons in consonsnts.into_iter() {
+        //     out.push_str(&cons.0);
+        //     for i in 0..cons.1 {
+        //         out.push(store.pop().unwrap());
+        //     }
+        // }
+
+        out
+    }
 }
 
 
 fn criterion_benchmark(c: &mut Criterion) {
-    c.bench_function("sort vowes 2", |b| {
+    c.bench_function("my only string", |b| {
         b.iter(|| {
             let s = black_box(String::from("KeIZLJPAaBAFSuraCXHPzxlgPVnHZNrG"));
-            Solution::sort_vowels(s);
+            Solution::sort_vowels3(s);
+        })
+    });
+    c.bench_function("wiyh sort", |b| {
+        b.iter(|| {
+            let s = black_box(String::from("KeIZLJPAaBAFSuraCXHPzxlgPVnHZNrG"));
+            Solution::sort_vowels2(s);
         })
     });
 }

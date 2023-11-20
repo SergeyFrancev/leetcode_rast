@@ -17,3 +17,7 @@ harness = false
 [[bench]]
 name = "sort_vowes"
 harness = false
+
+[[bench]]
+name = "three_palindrome"
+harness = false

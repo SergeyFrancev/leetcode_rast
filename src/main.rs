@@ -1,7 +1,7 @@
-mod sort_vowes;
-use sort_vowes::Solution;
+mod garbage_collection;
+use garbage_collection::Solution;
 
-use std::collections::{VecDeque, HashMap};
+// use std::collections::{VecDeque, HashMap};
 
 fn create_deep_vec(d: [[i32; 2]; 9]) -> Vec<Vec<i32>> {
     let d = [
@@ -23,16 +23,45 @@ fn create_deep_vec(d: [[i32; 2]; 9]) -> Vec<Vec<i32>> {
     data
 }
 
+fn get_vec(d: [&str; 4]) -> Vec<String> {
+    let mut out: Vec<String> = Vec::new();
+    for i in d {
+        out.push(i.to_string())
+    }
+    out
+}
+
 fn main() {
-    let mut v1 = VecDeque::from([1]);
-    let mut v2 = VecDeque::from([5]);
+    let data = get_vec(["G","P","GP","GG"]);
+    let t = Vec::from([2,4,3]);
+    let out = Solution::garbage_collection(data, t);
+    println!("Out: {out}");
+    // let data = Vec::from([7,9,10,8,6,4,1,5,2,3]);
+    // let out = Solution::reduction_operations(data);
+    // println!("{:?}", out);
+    // let out = Solution::max_frequency(data, 2636);
+    // println!("Out: {}", out);
+    // let s = 10 >> 1;
+    // println!("{}", s)
+    // Solution::find_different_binary_string(Vec::from([String::from("111")]));
+    // let binary_string = "1111111111111111";
 
-    v1.push_back(2);
-    v2.push_back(6);
+    // match usize::from_str_radix(binary_string, 2) {
+    //     Ok(binary_value) => {
+    //         println!("Binary String: {}", binary_string);
+    //         println!("Equivalent Binary Value: {}", binary_value);
+    //     }
+    //     Err(err) => {
+    //         eprintln!("Error: {}", err);
+    //     }
+    // }
+    // let out = Solution::count_palindromic_subsequence(String::from("aabca"));
+    // println!("{}", out);
 
-    v1.append(&mut v2);
-
-    println!("{:?}", v1);
+    // let data = String::from("aabca");
+    // for b in data.bytes().map(|byte| usize::from(byte - b'a')) {
+    //     println!("{:?}", b)
+    // }
     // let mut path: HashMap<i32, i32> = HashMap::new();
     // path.insert(1, 2);
     // path.insert(3, 4);
